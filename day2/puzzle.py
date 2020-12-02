@@ -46,7 +46,7 @@ def partTwo(input):
         if operator.xor(password[lower-1] == targetChar, password[upper-1] == targetChar):
             valid += 1
 
-    print("Part 588: " + str(valid))
+    print("Part 2: " + str(valid))
 
 
 def main():
