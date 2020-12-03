@@ -5,7 +5,7 @@ def parseInput():
         for line in inputFile:
             input.append(line[:-1])
 
-    return input
+    return(input)
 
 def partOne(input):
     trees = traverse(input, 3, 1)
@@ -33,10 +33,11 @@ def traverse(map, rightStep, downStep):
     while row < mapHeight:
         if (map[row][column] ==  '#'):
             count += 1
-            print(str(row) + " " + str(column) + " [T]" )
+            #print(str(row) + " " + str(column) + " [T]")
 
         else:
-            print(row,column)
+            #print(row,column)
+            pass
 
         column = (column + rightStep) % mapWidth
         row += downStep
