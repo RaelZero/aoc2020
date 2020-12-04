@@ -3,7 +3,7 @@ def parseInput():
 
     with open('input.txt') as inputFile:
         for line in inputFile:
-            input.append(line)
+            input.append(line[:-1]) # Skip the newline character
 
     return input
 
