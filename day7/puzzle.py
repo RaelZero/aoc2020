@@ -25,10 +25,37 @@ def parseInput():
 def partOne(rules, bagType):
     possibleContainers = 0
 
+    #Recursive awesomeness Python can't handle
     for bagRule in rules:
         if canContain(bagRule[0], bagType, [], rules):
             #print(bagRule[0] + " can contain " + bagType)
             possibleContainers += 1
+
+    '''
+    class containerFound(Exception): pass
+
+    for bagRule in rules:
+        try:
+            for (color, count) in bagRule[1]:
+                bags = [color]
+
+                while bags:
+                    currentBag = bags.pop()
+
+                    nextBagRule = [r for r in rules if r[0] == currentBag][0]
+                    #print(str(nextBagRule))
+                    for (bag, count) in nextBagRule[1]:
+                        #print(nextBagRule[1])
+                        if bagType == bag:
+                            possibleContainers += 1
+                            bags = []
+                            raise containerFound()
+                        else:
+                            bags.append(bag)
+                    #print(bags)
+        except containerFound:
+            continue
+    '''
 
     print("Part one: " + str(possibleContainers))
     return(possibleContainers)
@@ -51,12 +78,13 @@ def canContain(sourceBag, targetBag, scanQueue, rules):
             return(canContain(nextBag, targetBag, scanQueue, rules))
 
 def partTwo(rules, bagType):
+    # Recursive awesomeness - Python can't handle it
     #totalBags = countBags(bagType, [], 0, rules)
 
     totalBags = 0
     bags = [bagType]
 
-    while bags != []:
+    while bags:
         currentBag = bags.pop()
         totalBags += 1
 
@@ -64,6 +92,9 @@ def partTwo(rules, bagType):
         for (bag, count) in bagRule[1]:
             for i in range(int(count)):
                 bags.append(bag)
+
+    # Remove the bag itself from the count !!horrible hax
+    totalBags -= 1
 
     print("Part two: " + str(totalBags))
     return(totalBags)
