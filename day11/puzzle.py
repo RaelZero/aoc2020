@@ -56,7 +56,6 @@ def simulate(seats, criterion):
                         tmp = list(currSeats[row])
                         tmp[column] = '#'
                         currSeats[row] = ''.join(tmp)
-                        changed = True
 
                     elif prevSeats[row][column] == '#' and \
                         (occupiedAdjacent >= 4 and criterion == 'adj') \
@@ -66,13 +65,15 @@ def simulate(seats, criterion):
                         tmp = list(currSeats[row])
                         tmp[column] = 'L'
                         currSeats[row] = ''.join(tmp)
-                        changed = True
 
         occupiedSeats = 0
         for row in range(len(currSeats)):
             for column in range(len(currSeats[row])):
                 if currSeats[row][column] == '#':
                     occupiedSeats += 1
+
+        if occupiedSeats != prevOccupiedSeats:
+            changed = True
 
         #print("New state - occupied seats: " + str(occupiedSeats))
 
@@ -115,11 +116,88 @@ def getVisibilityMatrix(seats):
     #print(visMatrix)
     return(visMatrix)
 
+# Horrible horrible horrible
 def getVisible(row, column, seats):
     visible = []
 
+    if seats[row][column] == '.':
+        return(visible)
 
-    #print(visible)
+    # East
+    i = column + 1
+    while i < len(seats[row]):
+        if seats[row][i] == '#' or seats[row][i] == 'L':
+            visible.append((row, i))
+            break
+        i += 1
+
+    # West
+    i = column - 1
+    while i >= 0:
+        if seats[row][i] == '#' or seats[row][i] == 'L':
+            visible.append((row, i))
+            break
+        i -= 1
+
+    # North
+    i = row + 1
+    while i < len(seats):
+        if seats[i][column] == '#' or seats[i][column] == 'L':
+            visible.append((i, column))
+            break
+        i += 1
+
+    # South
+    i = row - 1
+    while i >= 0:
+        if seats[i][column] == '#' or seats[i][column] == 'L':
+            visible.append((i, column))
+            break
+        i -= 1
+
+    # North-East
+    i = row + 1
+    j = column + 1
+    while i < len(seats) and j < len(seats[row]):
+        if seats[i][j] == '#' or seats[i][j] == 'L':
+            visible.append((i, j))
+            break
+        i += 1
+        j += 1
+
+    # North-West
+    i = row + 1
+    j = column - 1
+    while i < len(seats) and j >= 0:
+        if seats[i][j] == '#' or seats[i][j] == 'L':
+            visible.append((i, j))
+            break
+        i += 1
+        j -= 1
+
+    # South-East
+    i = row - 1
+    j = column + 1
+    while i >= 0 and j < len(seats[row]):
+        if seats[i][j] == '#' or seats[i][j] == 'L':
+            visible.append((i, j))
+            break
+        i -= 1
+        j += 1
+
+    # South-West
+    i = row - 1
+    j = column - 1
+    while i >= 0 and j >= 0:
+        if seats[i][j] == '#' or seats[i][j] == 'L':
+            visible.append((i, j))
+            break
+        i -= 1
+        j -= 1
+
+    visible.sort()
+
+    #print(str((row, column)) + ': ' + str(visible))
     return(visible)
 
 def main():
