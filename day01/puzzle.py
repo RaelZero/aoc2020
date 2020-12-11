@@ -6,7 +6,7 @@ with open('input.txt') as inputFile:
 
 for number1 in input:
     for number2 in input:
-        if (number1 +  number2 == 2020):
+        if (number1 +  number2 == 2020 and number1 != number2):
             res1 = number1 * number2
         for number3 in input:
             if (number1 + number2 + number3 == 2020):
