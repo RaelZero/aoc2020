@@ -1,5 +1,5 @@
 def parseInput():
-    with open('input.txt') as inputFile:
+    with open('sampleinput.txt') as inputFile:
         startTime = int(inputFile.readline())
         buses = []
         schedule = []
@@ -30,6 +30,9 @@ def partOne(input):
     return(result)
 
 def partTwo(input):
+    schedule = input[2]
+
+
     pass
 
 def main():
